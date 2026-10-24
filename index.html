@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-950 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zylo Reach | Cold Email Automation Engine</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @keyframes pulse-slow { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .pulse-slow { animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+  </style>
+</head>
+<body class="min-h-full flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+  <!-- TOP NAVIGATION -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20">
+          <i class="fa-solid fa-paper-plane text-lg"></i>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold bg-gradient-to-r from-white via-slate-200 to-indigo-300 bg-clip-text text-transparent">
+            Zylo Reach
+          </h1>
+          <p class="text-xs text-slate-400">Cold Email Automation Dashboard</p>
+        </div>
+      </div>
+      
+      <!-- MODE BADGE IN HEADER -->
+      <div class="flex items-center gap-3">
+        <div id="headerModeBadge" class="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-950/90 text-emerald-300 border border-emerald-700/80">
+          <span class="h-2 w-2 rounded-full bg-emerald-400 pulse-slow"></span>
+          <span>🧪 SIMULATION MODE (ACTIVE)</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+    
+    <!-- TOP ROW: CSV/EXCEL UPLOAD & STATS -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- CSV / EXCEL UPLOAD BOX -->
+      <div class="lg:col-span-5 bg-slate-900/80 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-file-excel text-emerald-400 text-lg"></i>
+            <h2 class="text-sm font-bold text-white">Upload Leads (CSV / Excel)</h2>
+          </div>
+          <button onclick="resetToDefaultLeads()" class="text-[11px] text-slate-400 hover:text-indigo-300 transition flex items-center gap-1">
+            <i class="fa-solid fa-rotate-left"></i> Reset Default
+          </button>
+        </div>
+
+        <div class="border-2 border-dashed border-slate-700 hover:border-indigo-500/80 rounded-xl p-4 text-center cursor-pointer transition bg-slate-950/50" onclick="document.getElementById('fileInput').click()">
+          <input type="file" id="fileInput" accept=".csv, .xlsx, .xls" class="hidden" onchange="handleFileUpload(event)">
+          <i class="fa-solid fa-cloud-arrow-up text-2xl text-indigo-400 mb-1"></i>
+          <p class="text-xs font-semibold text-slate-200">Click to upload .csv or .xlsx / .xls</p>
+          <p class="text-[11px] text-slate-500 mt-0.5">Auto-maps Business Name, Email, Category & City</p>
+        </div>
+
+        <div class="mt-3 flex items-center justify-between text-xs">
+          <span class="text-slate-400">Current File:</span>
+          <span id="currentFileName" class="font-mono text-emerald-400 font-medium">leads.csv (41 Default Leads)</span>
+        </div>
+      </div>
+
+      <!-- STATS BOXES -->
+      <div class="lg:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col justify-center">
+          <div class="flex items-center justify-between text-slate-400 text-xs mb-1">
+            <span class="font-semibold uppercase tracking-wider text-[10px]">Total Leads</span>
+            <i class="fa-solid fa-users text-slate-500 text-xs"></i>
+          </div>
+          <div id="statTotal" class="text-2xl font-bold text-white">41</div>
+          <p class="text-[10px] text-slate-500 mt-0.5">Uploaded database</p>
+        </div>
+
+        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col justify-center">
+          <div class="flex items-center justify-between text-slate-400 text-xs mb-1">
+            <span class="font-semibold uppercase tracking-wider text-[10px]">Verified Safe</span>
+            <i class="fa-solid fa-shield-check text-emerald-400 text-xs"></i>
+          </div>
+          <div id="statVerified" class="text-2xl font-bold text-emerald-400">11</div>
+          <p class="text-[10px] text-slate-500 mt-0.5">Ready to outreach</p>
+        </div>
+
+        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col justify-center">
+          <div class="flex items-center justify-between text-slate-400 text-xs mb-1">
+            <span class="font-semibold uppercase tracking-wider text-[10px]">Auto Skipped</span>
+            <i class="fa-solid fa-filter text-amber-400 text-xs"></i>
+          </div>
+          <div id="statSkipped" class="text-2xl font-bold text-amber-400">30</div>
+          <p class="text-[10px] text-slate-500 mt-0.5">Missing / No Email</p>
+        </div>
+
+        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-sm flex flex-col justify-center">
+          <div class="flex items-center justify-between text-slate-400 text-xs mb-1">
+            <span class="font-semibold uppercase tracking-wider text-[10px]">Job Status</span>
+            <i class="fa-solid fa-circle-notch text-indigo-400 text-xs" id="statusSpinner"></i>
+          </div>
+          <div id="statStatus" class="text-2xl font-bold text-indigo-400">Ready</div>
+          <p id="statStatusSub" class="text-[10px] text-slate-500 mt-0.5">Waiting for run</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- MAIN TWO COLUMNS -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- LEFT FORM: SENDER CONFIG & MODE SELECTOR -->
+      <div class="lg:col-span-5 bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+        <div class="space-y-5">
+          
+          <!-- BIG PROMINENT MODE TOGGLE -->
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label class="block text-xs font-bold text-white uppercase tracking-wider">
+                Select Execution Mode
+              </label>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3">
+              <!-- SIMULATION BUTTON TAB -->
+              <button type="button" id="tabSimulation" onclick="selectMode('dry_run')"
+                class="relative p-3.5 border-2 border-emerald-500 bg-emerald-950/40 rounded-xl text-left transition shadow-lg shadow-emerald-950/50">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-emerald-300 flex items-center gap-1.5">
+                    <i class="fa-solid fa-flask"></i> 🧪 Simulation
+                  </span>
+                  <span id="badgeSimActive" class="px-1.5 py-0.5 text-[9px] font-bold uppercase rounded bg-emerald-500 text-slate-950">Active</span>
+                </div>
+                <p class="text-[11px] text-emerald-200/80 mt-1 font-medium">100% Safe Test Run. No real emails sent.</p>
+              </button>
+
+              <!-- LIVE SEND BUTTON TAB -->
+              <button type="button" id="tabLive" onclick="selectMode('live')"
+                class="relative p-3.5 border border-slate-700 bg-slate-800/40 rounded-xl text-left transition hover:border-slate-600">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-slate-400 flex items-center gap-1.5">
+                    <i class="fa-solid fa-bolt text-amber-400"></i> ⚡ Live Send
+                  </span>
+                  <span id="badgeLiveActive" class="hidden px-1.5 py-0.5 text-[9px] font-bold uppercase rounded bg-amber-500 text-slate-950">Active</span>
+                </div>
+                <p class="text-[11px] text-slate-400 mt-1 font-medium">Sends real emails via Gmail SMTP.</p>
+              </button>
+            </div>
+
+            <!-- MODE EXPLANATION BANNER -->
+            <div id="modeBanner" class="mt-3 p-3 rounded-xl bg-emerald-950/50 border border-emerald-800/60 text-xs text-emerald-300 flex items-start gap-2.5">
+              <i class="fa-solid fa-shield-halved text-emerald-400 text-sm mt-0.5"></i>
+              <div>
+                <strong class="font-semibold">Simulation Mode is Active:</strong>
+                <p class="text-[11px] text-emerald-200/90 mt-0.5">
+                  You can freely test! It validates emails, generates personalized pitch drafts, and streams progress. <span class="underline font-bold">App password is NOT required</span>.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <form id="outreachForm" class="space-y-4">
+            <input type="hidden" id="selectedMode" value="dry_run">
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1">Your Name</label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
+                    <i class="fa-solid fa-user text-xs"></i>
+                  </span>
+                  <input type="text" id="senderName" value="Harsh" required
+                    class="w-full pl-9 pr-3 py-2 bg-slate-800/90 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1">Company / Agency</label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
+                    <i class="fa-solid fa-building text-xs"></i>
+                  </span>
+                  <input type="text" id="senderCompany" value="Zylo Digital" required
+                    class="w-full pl-9 pr-3 py-2 bg-slate-800/90 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1">Your Gmail Address</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
+                  <i class="fa-solid fa-envelope text-xs"></i>
+                </span>
+                <input type="email" id="senderEmail" value="harsh@example.com" placeholder="yourname@gmail.com" required
+                  class="w-full pl-9 pr-3 py-2 bg-slate-800/90 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+              </div>
+            </div>
+
+            <div id="appPasswordContainer">
+              <div class="flex items-center justify-between mb-1">
+                <label class="block text-xs font-medium text-slate-300" id="pwdLabel">
+                  16-Digit Google App Password <span class="text-slate-500 font-normal">(Optional in Simulation)</span>
+                </label>
+                <a href="https://myaccount.google.com/apppasswords" target="_blank" class="text-[11px] text-indigo-400 hover:text-indigo-300">
+                  Get App Password <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                </a>
+              </div>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
+                  <i class="fa-solid fa-key text-xs"></i>
+                </span>
+                <input type="password" id="appPassword" placeholder="xxxx xxxx xxxx xxxx"
+                  class="w-full pl-9 pr-10 py-2 bg-slate-800/90 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+                <button type="button" onclick="togglePasswordVisibility()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
+                  <i id="pwdIcon" class="fa-solid fa-eye text-xs"></i>
+                </button>
+              </div>
+              <p class="text-[11px] text-slate-400 mt-1" id="pwdHelp">
+                💡 Only required when switching to 'Live Send' mode.
+              </p>
+            </div>
+
+            <!-- HUMAN-LIKE DELAY INFO -->
+            <div class="p-3 bg-slate-800/40 border border-slate-800 rounded-xl space-y-1 text-xs">
+              <div class="flex items-center justify-between text-slate-300 font-medium">
+                <span>Anti-Spam Human Delays</span>
+                <span class="text-indigo-400 font-mono">40s - 70s</span>
+              </div>
+              <p class="text-[11px] text-slate-500">Adds realistic random intervals so your account is never flagged.</p>
+            </div>
+
+            <!-- SUBMIT BUTTON -->
+            <button type="submit" id="btnStart"
+              class="w-full mt-4 py-3.5 px-4 rounded-xl font-bold text-sm bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-950 active:scale-[0.99] transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-play text-xs" id="btnIcon"></i>
+              <span id="btnText">▶️ Run Safe Simulation</span>
+            </button>
+          </form>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
+          <span>🔒 Password processed in-memory only</span>
+          <span>CAN-SPAM Compliant Opt-Out</span>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: LIVE CONSOLE & LEADS TABLE -->
+      <div class="lg:col-span-7 flex flex-col gap-6">
+        
+        <!-- PROGRESS & STATUS BOX -->
+        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-semibold text-white flex items-center gap-2">
+              <i class="fa-solid fa-chart-line text-indigo-400"></i>
+              Live Execution Progress
+            </h3>
+            <span id="progressPercent" class="text-xs font-mono font-bold text-emerald-400">0%</span>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden p-0.5 border border-slate-700">
+            <div id="progressBar" class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full w-0 transition-all duration-300"></div>
+          </div>
+
+          <!-- Realtime Terminal -->
+          <div class="mt-4">
+            <div class="flex items-center justify-between text-xs text-slate-400 mb-1.5 px-1">
+              <span class="flex items-center gap-2">
+                <span class="h-2 w-2 rounded-full bg-indigo-400 pulse-slow"></span>
+                Console Stream
+              </span>
+              <button onclick="clearLogs()" class="hover:text-slate-200 text-[11px]">Clear Logs</button>
+            </div>
+            <div id="consoleLog" class="h-60 bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-xs overflow-y-auto space-y-1 text-slate-300 shadow-inner">
+              <div class="text-slate-500">System ready. Click "▶️ Run Safe Simulation" to test, or switch to Live Send mode.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VERIFIED LEADS QUEUE -->
+        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl flex-1 flex flex-col">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="text-sm font-semibold text-white flex items-center gap-2">
+                <i class="fa-solid fa-list-check text-indigo-400"></i>
+                Verified Target Queue
+              </h3>
+              <p class="text-xs text-slate-400">Showing verified leads ready for outreach</p>
+            </div>
+            <span id="leadsTableCount" class="text-xs text-emerald-400 font-semibold">11 Safe Leads</span>
+          </div>
+
+          <div class="overflow-x-auto flex-1 max-h-56 overflow-y-auto">
+            <table class="w-full text-left text-xs text-slate-300">
+              <thead class="text-slate-400 border-b border-slate-800 uppercase text-[10px] tracking-wider">
+                <tr>
+                  <th class="py-2 px-3">Business</th>
+                  <th class="py-2 px-3">Niche</th>
+                  <th class="py-2 px-3">Location</th>
+                  <th class="py-2 px-3">Email</th>
+                  <th class="py-2 px-3 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody id="leadsTableBody" class="divide-y divide-slate-800/60 font-sans">
+                <!-- Loaded dynamically via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- EMAIL PREVIEW MODAL -->
+  <div id="previewModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-xl w-full p-6 shadow-2xl relative">
+      <button onclick="closePreviewModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="flex items-center gap-3 mb-4">
+        <div class="h-10 w-10 rounded-xl flex items-center justify-center text-white bg-indigo-600">
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+        <div>
+          <h4 id="modalBusinessName" class="text-base font-bold text-white">Business Name</h4>
+          <p id="modalCategoryCity" class="text-xs text-slate-400">Category • City</p>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs font-mono">
+          <span class="text-slate-400">Subject:</span>
+          <span id="modalSubject" class="text-indigo-300 font-semibold ml-1">...</span>
+        </div>
+
+        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-sans text-slate-300 whitespace-pre-line leading-relaxed max-h-72 overflow-y-auto" id="modalBody">
+          ...
+        </div>
+      </div>
+
+      <div class="mt-4 flex justify-end">
+        <button onclick="closePreviewModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-medium rounded-xl text-white transition">
+          Close Preview
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let allLeads = [];
+    let currentJobId = null;
+    let pollInterval = null;
+
+    function selectMode(mode) {
+      document.getElementById('selectedMode').value = mode;
+
+      const tabSim = document.getElementById('tabSimulation');
+      const tabLive = document.getElementById('tabLive');
+      const badgeSim = document.getElementById('badgeSimActive');
+      const badgeLive = document.getElementById('badgeLiveActive');
+      const banner = document.getElementById('modeBanner');
+      const btn = document.getElementById('btnStart');
+      const btnText = document.getElementById('btnText');
+      const pwdLabel = document.getElementById('pwdLabel');
+      const pwdHelp = document.getElementById('pwdHelp');
+      const headerBadge = document.getElementById('headerModeBadge');
+      const progressBar = document.getElementById('progressBar');
+
+      if (mode === 'dry_run') {
+        tabSim.className = 'relative p-3.5 border-2 border-emerald-500 bg-emerald-950/40 rounded-xl text-left transition shadow-lg shadow-emerald-950/50';
+        tabLive.className = 'relative p-3.5 border border-slate-700 bg-slate-800/40 rounded-xl text-left transition hover:border-slate-600';
+        badgeSim.classList.remove('hidden');
+        badgeLive.classList.add('hidden');
+
+        banner.className = 'mt-3 p-3 rounded-xl bg-emerald-950/50 border border-emerald-800/60 text-xs text-emerald-300 flex items-start gap-2.5';
+        banner.innerHTML = `
+          <i class="fa-solid fa-shield-halved text-emerald-400 text-sm mt-0.5"></i>
+          <div>
+            <strong class="font-semibold">Simulation Mode is Active:</strong>
+            <p class="text-[11px] text-emerald-200/90 mt-0.5">
+              You can freely test! It validates emails, generates personalized pitch drafts, and streams progress. <span class="underline font-bold">App password is NOT required</span>.
+            </p>
+          </div>
+        `;
+
+        btn.className = 'w-full mt-4 py-3.5 px-4 rounded-xl font-bold text-sm bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-950 active:scale-[0.99] transition flex items-center justify-center gap-2';
+        btnText.innerText = '▶️ Run Safe Simulation';
+        pwdLabel.innerHTML = '16-Digit Google App Password <span class="text-slate-500 font-normal">(Optional in Simulation)</span>';
+        pwdHelp.innerText = '💡 Only required when switching to Live Send mode.';
+        headerBadge.className = 'flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-950/90 text-emerald-300 border border-emerald-700/80';
+        headerBadge.innerHTML = '<span class="h-2 w-2 rounded-full bg-emerald-400 pulse-slow"></span><span>🧪 SIMULATION MODE (ACTIVE)</span>';
+        progressBar.className = 'h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full w-0 transition-all duration-300';
+      } else {
+        tabLive.className = 'relative p-3.5 border-2 border-amber-500 bg-amber-950/40 rounded-xl text-left transition shadow-lg shadow-amber-950/50';
+        tabSim.className = 'relative p-3.5 border border-slate-700 bg-slate-800/40 rounded-xl text-left transition hover:border-slate-600';
+        badgeLive.classList.remove('hidden');
+        badgeSim.classList.add('hidden');
+
+        banner.className = 'mt-3 p-3 rounded-xl bg-amber-950/50 border border-amber-800/60 text-xs text-amber-300 flex items-start gap-2.5';
+        banner.innerHTML = `
+          <i class="fa-solid fa-triangle-exclamation text-amber-400 text-sm mt-0.5"></i>
+          <div>
+            <strong class="font-semibold">⚠️ Live Sending Mode is Active:</strong>
+            <p class="text-[11px] text-amber-200/90 mt-0.5">
+              Real emails will be sent out via Gmail SMTP with anti-spam delays. <span class="underline font-bold">16-Digit Google App Password is required</span>.
+            </p>
+          </div>
+        `;
+
+        btn.className = 'w-full mt-4 py-3.5 px-4 rounded-xl font-bold text-sm bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white shadow-lg shadow-amber-950 active:scale-[0.99] transition flex items-center justify-center gap-2';
+        btnText.innerText = '🚀 Launch Real Email Campaign';
+        pwdLabel.innerHTML = '16-Digit Google App Password <span class="text-amber-400 font-semibold">(Required for Live)</span>';
+        pwdHelp.innerText = '⚠️ Required: Enter your 16-character Google App Password.';
+        headerBadge.className = 'flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-950/90 text-amber-300 border border-amber-700/80';
+        headerBadge.innerHTML = '<span class="h-2 w-2 rounded-full bg-amber-400 pulse-slow"></span><span>⚡ LIVE SENDING MODE (ACTIVE)</span>';
+        progressBar.className = 'h-full bg-gradient-to-r from-amber-500 to-orange-400 rounded-full w-0 transition-all duration-300';
+      }
+    }
+
+    async function loadLeads() {
+      try {
+        const res = await fetch('/api/leads');
+        const data = await res.json();
+        allLeads = data.leads || [];
+        renderLeads(data);
+      } catch (err) {
+        console.error('Failed to load leads:', err);
+      }
+    }
+
+    function renderLeads(data) {
+      document.getElementById('statTotal').innerText = data.total;
+      document.getElementById('statVerified').innerText = data.verified_count;
+      document.getElementById('statSkipped').innerText = data.total - data.verified_count;
+      document.getElementById('leadsTableCount').innerText = `${data.verified_count} Safe Leads`;
+
+      const tableBody = document.getElementById('leadsTableBody');
+      tableBody.innerHTML = '';
+
+      const verified = allLeads.filter(l => l.is_verified);
+      verified.forEach((lead, i) => {
+        const isCafe = (lead.Category || '').toLowerCase().includes('cafe') || (lead.Category || '').toLowerCase().includes('coffee');
+        const badgeClass = isCafe 
+          ? 'bg-amber-950/80 text-amber-400 border border-amber-800/60' 
+          : 'bg-purple-950/80 text-purple-400 border border-purple-800/60';
+
+        const row = document.createElement('tr');
+        row.className = 'hover:bg-slate-800/40 transition';
+        row.innerHTML = `
+          <td class="py-2.5 px-3 font-medium text-white">${lead['Business Name']}</td>
+          <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded-full text-[10px] ${badgeClass}">${lead.Category}</span></td>
+          <td class="py-2.5 px-3 text-slate-400">${lead.City || 'USA'}</td>
+          <td class="py-2.5 px-3 text-indigo-300 font-mono text-[11px]">${lead['Researched Business Email']}</td>
+          <td class="py-2.5 px-3 text-right">
+            <button onclick="previewLead(${i})" class="text-xs text-slate-400 hover:text-white px-2 py-1 bg-slate-800 hover:bg-indigo-600 rounded-lg transition">
+              <i class="fa-solid fa-eye"></i> Preview
+            </button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Handle File Upload (CSV / Excel)
+    async function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      addLog(`[${new Date().toLocaleTimeString()}] Uploading file: ${file.name}...`);
+
+      try {
+        const res = await fetch('/api/upload-leads', {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          alert(data.error || 'Upload failed');
+          return;
+        }
+
+        document.getElementById('currentFileName').innerText = `${file.name} (${data.total} Leads Loaded)`;
+        allLeads = data.leads;
+        renderLeads(data);
+        addLog(`✅ File loaded successfully! ${data.total} total rows, ${data.verified_count} verified safe emails.`);
+      } catch (err) {
+        alert('File upload error: ' + err.message);
+      }
+    }
+
+    async function resetToDefaultLeads() {
+      try {
+        const res = await fetch('/api/reset-leads', { method: 'POST' });
+        const data = await res.json();
+        document.getElementById('currentFileName').innerText = 'leads.csv (41 Default Leads)';
+        allLeads = data.leads;
+        renderLeads(data);
+        addLog(`[${new Date().toLocaleTimeString()}] Reset to default 41 leads.`);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function togglePasswordVisibility() {
+      const input = document.getElementById('appPassword');
+      const icon = document.getElementById('pwdIcon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fa-solid fa-eye-slash text-xs';
+      } else {
+        input.type = 'password';
+        icon.className = 'fa-solid fa-eye text-xs';
+      }
+    }
+
+    function previewLead(index) {
+      const verified = allLeads.filter(l => l.is_verified);
+      const lead = verified[index];
+      if (!lead) return;
+
+      const senderName = document.getElementById('senderName').value || 'Harsh';
+      const senderCompany = document.getElementById('senderCompany').value || 'Zylo Digital';
+      const isCafe = (lead.Category || '').toLowerCase().includes('cafe') || (lead.Category || '').toLowerCase().includes('coffee');
+
+      document.getElementById('modalBusinessName').innerText = lead['Business Name'];
+      document.getElementById('modalCategoryCity').innerText = `${lead.Category} • ${lead.City}`;
+
+      let subject, body;
+      if (isCafe) {
+        subject = `Idea to boost footfall & local orders for ${lead['Business Name']}`;
+        body = `Hi ${lead['Business Name']} team,
+
+I came across ${lead['Business Name']} in ${lead.City} and really liked what you've built.
+
+I'm ${senderName} from ${senderCompany}. We help local cafes and food businesses get more everyday customers through:
+- Local Google Maps & SEO optimization (so nearby customers find you first)
+- Mouth-watering short-form reels & AI visuals for Instagram/TikTok
+- Fast, mobile-friendly online menu & ordering setup
+
+Would you be open to a 3-minute chat or a quick teardown of a few ideas tailored specifically for ${lead['Business Name']}?
+
+Best regards,
+
+${senderName}
+${senderCompany}
+---
+If you'd prefer not to receive ideas from us, simply reply with 'Unsubscribe' and I'll remove you immediately.`;
+      } else {
+        subject = `Quick growth ideas for ${lead['Business Name']}'s online catalog`;
+        body = `Hi ${lead['Business Name']} team,
+
+I've been checking out ${lead['Business Name']}'s collection in ${lead.City}—you have great styling and pieces.
+
+I'm ${senderName} from ${senderCompany}. We help boutique and apparel brands scale direct-to-consumer sales through:
+- High-converting e-commerce web design & smooth checkout UX
+- Meta/Instagram catalog ads targeted at local fashion shoppers
+- AI-enhanced product showcase videos for social media
+
+Would you be open to a quick overview with 2-3 tailored ideas to boost online conversions for ${lead['Business Name']}?
+
+Best regards,
+
+${senderName}
+${senderCompany}
+---
+If you'd prefer not to receive ideas from us, simply reply with 'Unsubscribe' and I'll remove you immediately.`;
+      }
+
+      document.getElementById('modalSubject').innerText = subject;
+      document.getElementById('modalBody').innerText = body;
+      document.getElementById('previewModal').classList.remove('hidden');
+    }
+
+    function closePreviewModal() {
+      document.getElementById('previewModal').classList.add('hidden');
+    }
+
+    function addLog(text) {
+      const consoleBox = document.getElementById('consoleLog');
+      const div = document.createElement('div');
+      div.innerText = text;
+      consoleBox.appendChild(div);
+      consoleBox.scrollTop = consoleBox.scrollHeight;
+    }
+
+    function clearLogs() {
+      document.getElementById('consoleLog').innerHTML = '';
+    }
+
+    // Handle Form Submit
+    document.getElementById('outreachForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const senderName = document.getElementById('senderName').value;
+      const senderCompany = document.getElementById('senderCompany').value;
+      const senderEmail = document.getElementById('senderEmail').value;
+      const appPassword = document.getElementById('appPassword').value;
+      const mode = document.getElementById('selectedMode').value;
+
+      if (mode === 'live' && (!appPassword || appPassword.trim().length < 10)) {
+        alert('Please enter your 16-digit Google App Password for Live Sending mode!');
+        return;
+      }
+
+      const btn = document.getElementById('btnStart');
+      btn.disabled = true;
+      btn.classList.add('opacity-50', 'cursor-not-allowed');
+
+      document.getElementById('statStatus').innerText = mode === 'dry_run' ? 'Simulating' : 'Sending';
+      document.getElementById('statStatus').className = mode === 'dry_run' ? 'text-2xl font-bold text-emerald-400' : 'text-2xl font-bold text-amber-400';
+      document.getElementById('statStatusSub').innerText = mode === 'dry_run' ? 'Safe test run active' : 'Live emails in progress';
+      document.getElementById('statusSpinner').classList.add('fa-spin');
+
+      clearLogs();
+      addLog(`[${new Date().toLocaleTimeString()}] Starting outreach process (${mode.toUpperCase()})...`);
+
+      try {
+        const res = await fetch('/api/start-outreach', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sender_name: senderName,
+            sender_company: senderCompany,
+            sender_email: senderEmail,
+            app_password: appPassword,
+            mode: mode
+          })
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          addLog(`❌ Error: ${data.error || 'Request failed'}`);
+          resetButton();
+          return;
+        }
+
+        currentJobId = data.job_id;
+        addLog(`⚡ Task ID initialized: ${currentJobId}`);
+        
+        if (pollInterval) clearInterval(pollInterval);
+        pollInterval = setInterval(pollJobStatus, 800);
+
+      } catch (err) {
+        addLog(`❌ Connection Error: ${err.message}`);
+        resetButton();
+      }
+    });
+
+    async function pollJobStatus() {
+      if (!currentJobId) return;
+
+      try {
+        const res = await fetch(`/api/job-status/${currentJobId}`);
+        const data = await res.json();
+
+        const total = data.total || 11;
+        const processed = data.processed || 0;
+        const pct = Math.round((processed / total) * 100);
+
+        document.getElementById('progressBar').style.width = `${pct}%`;
+        document.getElementById('progressPercent').innerText = `${pct}%`;
+
+        const consoleBox = document.getElementById('consoleLog');
+        consoleBox.innerHTML = '';
+        (data.logs || []).forEach(log => {
+          const div = document.createElement('div');
+          div.innerText = log;
+          if (log.includes('✅') || log.includes('🎉') || log.includes('SIMULATION PASS')) {
+            div.className = 'text-emerald-400 font-semibold';
+          } else if (log.includes('❌') || log.includes('Failed')) {
+            div.className = 'text-rose-400 font-semibold';
+          } else if (log.includes('⏳') || log.includes('Waiting') || log.includes('Sleeping')) {
+            div.className = 'text-amber-400';
+          }
+          consoleBox.appendChild(div);
+        });
+        consoleBox.scrollTop = consoleBox.scrollHeight;
+
+        if (data.status === 'completed' || data.status === 'failed') {
+          clearInterval(pollInterval);
+          resetButton();
+          if (data.status === 'completed') {
+            document.getElementById('statStatus').innerText = 'Completed';
+            document.getElementById('statStatus').className = 'text-2xl font-bold text-emerald-400';
+            document.getElementById('statStatusSub').innerText = 'Task finished';
+          } else {
+            document.getElementById('statStatus').innerText = 'Failed';
+            document.getElementById('statStatus').className = 'text-2xl font-bold text-rose-400';
+            document.getElementById('statStatusSub').innerText = 'Check error details';
+          }
+        }
+      } catch (err) {
+        console.error('Poll error:', err);
+      }
+    }
+
+    function resetButton() {
+      const btn = document.getElementById('btnStart');
+      btn.disabled = false;
+      btn.classList.remove('opacity-50', 'cursor-not-allowed');
+      document.getElementById('statusSpinner').classList.remove('fa-spin');
+    }
+
+    // Init
+    loadLeads();
+  </script>
+</body>
+</html>
