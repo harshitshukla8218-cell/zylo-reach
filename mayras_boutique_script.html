@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Zylo Digital - US Client Sales Call Script (Mayra's Boutique)</title>
+  <style>
+    @page {
+      size: letter;
+      margin: 18mm 16mm 18mm 16mm;
+      @bottom-right {
+        content: counter(page);
+      }
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1e293b;
+      background: #ffffff;
+      line-height: 1.5;
+      font-size: 13.5pt;
+    }
+
+    .header-banner {
+      border-bottom: 2px solid #3b82f6;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .brand-title {
+      font-size: 11pt;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: #2563eb;
+      text-transform: uppercase;
+    }
+
+    .doc-title {
+      font-size: 22pt;
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.2;
+      margin-top: 4px;
+    }
+
+    .target-badge {
+      font-size: 14pt;
+      font-weight: 700;
+      color: #475569;
+    }
+
+    .meta-card {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 11.5pt;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px 16px;
+    }
+
+    .meta-item strong {
+      color: #0f172a;
+    }
+
+    .objective-box {
+      background: #eff6ff;
+      border-left: 4px solid #2563eb;
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 22px;
+      font-size: 12pt;
+    }
+
+    .objective-box strong {
+      color: #1d4ed8;
+      font-size: 11pt;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .section-header {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13pt;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin: 24px 0 14px 0;
+      text-transform: uppercase;
+      break-after: avoid;
+    }
+
+    .sub-section {
+      font-size: 14pt;
+      font-weight: 800;
+      color: #1e3a8a;
+      margin: 16px 0 8px 0;
+      border-bottom: 1px solid #cbd5e1;
+      padding-bottom: 4px;
+      break-after: avoid;
+    }
+
+    .dialogue-card {
+      margin-bottom: 12px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      break-inside: avoid;
+    }
+
+    .harsh {
+      background: #f0fdf4;
+      border-left: 5px solid #16a34a;
+    }
+
+    .harsh .speaker {
+      color: #15803d;
+    }
+
+    .prospect {
+      background: #f8fafc;
+      border-left: 5px solid #64748b;
+    }
+
+    .prospect .speaker {
+      color: #334155;
+    }
+
+    .speaker {
+      font-size: 11pt;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .dialogue-text {
+      font-size: 13.5pt;
+      color: #0f172a;
+      line-height: 1.45;
+    }
+
+    .tip-box {
+      background: #fefce8;
+      border: 1px solid #fef08a;
+      border-left: 4px solid #ca8a04;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin: 12px 0;
+      font-size: 11.5pt;
+      color: #854d0e;
+      break-inside: avoid;
+    }
+
+    .checklist {
+      list-style: none;
+      margin: 10px 0;
+    }
+
+    .checklist li {
+      position: relative;
+      padding-left: 26px;
+      margin-bottom: 8px;
+      font-size: 12.5pt;
+    }
+
+    .checklist li::before {
+      content: "✔";
+      position: absolute;
+      left: 0;
+      color: #2563eb;
+      font-weight: bold;
+    }
+
+    .page-break {
+      page-break-before: always;
+      break-before: page;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 9.5pt;
+      color: #94a3b8;
+      margin-top: 30px;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COVER / HEADER -->
+  <div class="header-banner">
+    <div>
+      <div class="brand-title">ZYLO DIGITAL • SALES CALL PLAYBOOK</div>
+      <div class="doc-title">US Client Sales Call Script</div>
+      <div class="target-badge">Prospect: Mayra’s Boutique (Los Angeles, CA)</div>
+    </div>
+    <div style="text-align: right; font-size: 11pt; color: #64748b;">
+      <div><strong>Caller:</strong> Harsh</div>
+      <div><strong>Version:</strong> 1.0 (Live)</div>
+    </div>
+  </div>
+
+  <!-- LEAD METADATA -->
+  <div class="meta-card">
+    <div class="meta-item"><strong>Business Name:</strong> Mayra’s Boutique</div>
+    <div class="meta-item"><strong>Contact Phone:</strong> +1 (562) 388-0931</div>
+    <div class="meta-item"><strong>Store Address:</strong> 10334 1/2 S Western Ave, Los Angeles, CA 90047</div>
+    <div class="meta-item"><strong>Time Zone:</strong> Pacific Time (PST / 12.5 hrs behind IST)</div>
+  </div>
+
+  <div class="objective-box">
+    <strong>Primary Objective of this Call</strong>
+    Start a friendly, natural conversation, discover their in-store vs online retail situation, and book a <strong>15-minute discovery call</strong>. Do NOT pitch or close the $600/$800 package on the first phone call.
+  </div>
+
+  <!-- PART 1 -->
+  <div class="section-header">PART 1 — OPENING THE CALL</div>
+
+  <div class="sub-section">1. Confirm the Business & Permission</div>
+
+  <div class="dialogue-card harsh">
+    <span class="speaker">HARSH</span>
+    <div class="dialogue-text">"Hi, good morning! Am I speaking with Mayra’s Boutique?"</div>
+  </div>
+
+  <div class="dialogue-card prospect">
+    <span class="speaker">PROSPECT (MAYRA / STAFF)</span>
+    <div class="dialogue-text">"Yes, this is Mayra's Boutique. How can I help you?"</div>
+  </div>
+
+  <div class="dialogue-card harsh">
+    <span class="speaker">HARSH</span>
+    <div class="dialogue-text">"Hi! My name is <strong>Harsh</strong>, and I’m calling from <strong>Zylo Digital</strong>. We help independent fashion and apparel businesses with website development, creative visuals, and digital advertising. I came across your boutique while researching local retailers in Los Angeles. Is now an okay time for a brief two-minute conversation?"</div>
+  </div>
+
+  <div class="dialogue-card prospect">
+    <span class="speaker">PROSPECT — IF YES</span>
+    <div class="dialogue-text">"Sure, go ahead."</div>
+  </div>
+
+  <div class="dialogue-card harsh">
+    <span class="speaker">HARSH (THE HOOK)</span>
+    <div class="dialogue-text">"Thank you, I appreciate that. I noticed your boutique on Western Avenue has great local styling, but it appears your standalone online store isn't currently listed or active. I wanted to ask: are you currently working on launching an online catalog, or is your main focus on in-store sales at the moment?"</div>
+  </div>
+
+  <div class="tip-box">
+    💡 <strong>Pro Tip:</strong> Say it <em>"appears not to be currently listed or active."</em> Never claim their site is broken or assume nobody has tried to build it.
+  </div>
+
+  <div class="sub-section">2. Reach the Decision-Maker</div>
+
+  <div class="dialogue-card harsh">
+    <span class="speaker">HARSH</span>
+    <div class="dialogue-text">"Would I be speaking with Mayra or the person who handles website and marketing decisions for the boutique, or is there someone else in charge of that?"</div>
+  </div>
+
+  <div class="dialogue-card prospect">
+    <span class="speaker">PROSPECT</span>
+    <div class="dialogue-text">"I’m Mayra / I’m the store owner." <em>(Or: "The owner isn't in right now.")</em></div>
+  </div>
+
+  <div class="dialogue-card harsh">
+    <span class="speaker">HARSH (IF OWNER)</span>
+    <div class="dialogue-text">"Wonderful, glad I reached you directly!"</div>
+  </div>
+
+  <!-- PART 2 -->
+  <div class="section-header page-break">PART 2 — DISCOVER THEIR NEEDS</div>
+
+  <div class="dialogue-card harsh">
+    <span class="speaker">HARSH</span>
+    <div class="dialogue-text">"To give you a little context, I understand your boutique offers women’s fashion and styling. I thought there might be some interesting ways to showcase your pieces online across Los Angeles, but I’d love to understand your current priorities first. What are your main goals for the business over the next few months?"</div>
+  </div>
+
+  <div class="dialogue-card prospect">
+    <span class="speaker">PROSPECT</span>
+    <div class="dialogue-text">"We want more people through the door / We want an online store / We’re doing okay with walk-ins."</div>
+  </div>
+
+  <div class="dialogue-card harsh">
+    <span class="speaker">HARSH</span>
+    <div class="dialogue-text">"That’s helpful. How are most of your customers discovering Mayra’s Boutique right now—is it mainly walk-in foot traffic along Western Ave, word of mouth, Instagram, or another channel?"</div>
+  </div>
+
+  <div class="dialogue-card prospect">
+    <span class="speaker">PROSPECT</span>
+    <div class="dialogue-text">"Mostly local walk-ins, and some people from Instagram."</div>
+  </div>
+
+  <div class="dialogue-card harsh">
+    <span class="speaker">HARSH</span>
+    <div class="dialogue-text">"Got it. Are you satisfied with how your current social media and online presence translate into sales, or is there an area where you feel you're leaving money on the table?"</div>
+  </div>
+
+  <div class="dialogue-card prospect">
+    <span class="speaker">PROSPECT</span>
+    <div class="dialogue-text">"We post clothes when new shipments come in, but it’s hard to stay consistent, and we don't have a website to buy from."</div>
+  </div>
+
+  <div class="dialogue-card harsh">
+    <span class="speaker">HARSH</span>
+    <div class="dialogue-text">"Understood. Have you already got an agency or freelancer helping you with product photos and web development, or are you managing all of that yourself?"</div>
+  </div>
+
+  <div class="dialogue-card harsh">
+    <span class="speaker">HARSH — FOLLOW-UP</span>
+    <div class="dialogue-text">"If you could improve one single thing about your store’s online visibility right now, what would make the biggest difference to your bottom line?"</div>
+  </div>
+
+  <!-- PART 3 -->
+  <div class="section-header">PART 3 — MATCH THE SERVICE TO THE NEED</div>
+
+  <div class="sub-section">A. If They Need an E-Commerce Website</div>
+  <div class="dialogue-card prospect">
+    <span class="speaker">PROSPECT</span>
+    <div class="dialogue-text">"We really need to get an online store set up so customers don't just have to come to the shop."</div>
+  </div>
+  <div class="dialogue-card harsh">
+    <span class="speaker">HARSH</span>
+    <div class="dialogue-text">"That sounds worth exploring. For an independent boutique like yours, a clean, mobile-optimized online store allows customers across LA to browse new arrivals, check sizing, and order directly for delivery or pickup.<br><br>Our team specializes in fast, high-converting e-commerce web development. We’d first want to see whether you need a streamlined product catalog or a full online store. Would you be open to a short 15-minute call with our team to explore the right approach?"</div>
+  </div>
+
+  <div class="sub-section">B. If They Need Social Media & Product Content</div>
+  <div class="dialogue-card prospect">
+    <span class="speaker">PROSPECT</span>
+    <div class="dialogue-text">"Our main issue is product photos and getting noticed on Instagram."</div>
+  </div>
+  <div class="dialogue-card harsh">
+    <span class="speaker">HARSH</span>
+    <div class="dialogue-text">"Absolutely. Boutique collections offer great creative possibilities: weekly arrivals, outfit pairings, styling guides, and seasonal promos. At Zylo Digital, we create AI-powered product photoshoots, high-converting short-form video reels, and targeted Meta ads that put your pieces in front of active fashion shoppers in LA.<br><br>I’ll make sure our team focuses specifically on that visual and ad requirement. Would a short discovery meeting this week work for you?"</div>
+  </div>
+
+  <!-- PART 4 -->
+  <div class="section-header page-break">PART 4 — PRICING AND BUDGET OBJECTIONS</div>
+
+  <div class="sub-section">If They Ask: “How much do you charge?”</div>
+  <div class="dialogue-card prospect">
+    <span class="speaker">PROSPECT</span>
+    <div class="dialogue-text">"How much would something like this cost? What are your rates?"</div>
+  </div>
+
+  <div class="dialogue-card harsh">
+    <span class="speaker">HARSH</span>
+    <div class="dialogue-text">"We have two first-month options depending on scope: <strong>Digital Growth at $600</strong> and <strong>Premium Growth at $800</strong>. The exact deliverables depend on what you need.<br><br>After the first month, our ongoing marketing-only support is <strong>$300 per month</strong>, and a standalone website project is <strong>$300</strong>, subject to agreed terms.<br><br>Rather than recommend a package that doesn't fit, I’d suggest we take 15 minutes to understand your goals and then provide clear pricing before any work begins."</div>
+  </div>
+
+  <div class="sub-section">If They Say: “That’s too expensive / We don’t have budget.”</div>
+  <div class="dialogue-card harsh">
+    <span class="speaker">HARSH</span>
+    <div class="dialogue-text">"I completely understand, Mayra. I wouldn’t want you to invest in anything that doesn’t fit your business. May I ask—is the main concern the budget itself, or are you not yet sure which deliverables would justify the investment?<br><br><em>(If budget):</em> Thanks for clarifying. We can explore a smaller, clearly defined service first, like a website-only project for $300. Would you prefer to explore a website project or focus on creative marketing first?"</div>
+  </div>
+
+  <!-- PART 5 -->
+  <div class="section-header">PART 5 — COMMON OBJECTIONS</div>
+
+  <div class="sub-section">“Just send me some information.”</div>
+  <div class="dialogue-card harsh">
+    <span class="speaker">HARSH</span>
+    <div class="dialogue-text">"Of course! To make sure I send you something truly relevant to Mayra’s Boutique, would you prefer an overview of our boutique website designs, or examples of our AI product photo & video showcases?<br><br><em>(Once answered):</em> Perfect. What’s the best email to send that to? I'll send that over today and follow up early next week after you’ve had a chance to review it. Fair enough?"</div>
+  </div>
+
+  <div class="sub-section">“Can you guarantee more sales?”</div>
+  <div class="dialogue-card harsh">
+    <span class="speaker">HARSH</span>
+    <div class="dialogue-text">"I wouldn’t want to promise a result we can’t guarantee. Our objective is to strengthen Mayra's Boutique's digital presence, elevate your product visuals, and build a clear path from local attention to customer purchases. Actual revenue depends on product pricing, ad spend, and seasonal market demand."</div>
+  </div>
+
+  <!-- PART 6 -->
+  <div class="section-header page-break">PART 6 — CLOSE & BOOK THE 15-MINUTE CALL</div>
+
+  <div class="dialogue-card harsh">
+    <span class="speaker">HARSH</span>
+    <div class="dialogue-text">"Based on what you’ve shared, I think the next useful step would be a short 15-minute discovery meeting with our team. We can review your priorities, show you 2 or 3 creative ideas tailored for Mayra’s Boutique, and provide a clear written scope with timeline and pricing.<br><br>Would you be available for a brief 15-minute call this Thursday or Friday?"</div>
+  </div>
+
+  <div class="dialogue-card prospect">
+    <span class="speaker">PROSPECT</span>
+    <div class="dialogue-text">"Thursday works."</div>
+  </div>
+
+  <div class="dialogue-card harsh">
+    <span class="speaker">HARSH</span>
+    <div class="dialogue-text">"Wonderful! Would 11:00 AM or 3:00 PM Pacific Time work better for your schedule? ... Perfect, 3:00 PM PST.<br><br>May I confirm the best email address to send the calendar invitation and brief agenda to?<br><br><em>(Confirm):</em> Just to confirm, we have you scheduled for Thursday at 3:00 PM Pacific Time. I’ll send the meeting invite right now. Thank you so much for your time, Mayra. Speak soon!"</div>
+  </div>
+
+  <!-- PART 7 -->
+  <div class="section-header">PART 7 — FOLLOW-UP EMAIL TEMPLATE</div>
+
+  <div class="dialogue-card harsh" style="background: #ffffff; border: 1.5px solid #cbd5e1;">
+    <span class="speaker" style="color: #0f172a;">SUBJECT: Follow-up: Mayra’s Boutique × Zylo Digital — Discovery Call</span>
+    <div class="dialogue-text" style="font-size: 12pt; white-space: pre-line;">
+Hi Mayra,
+
+Thank you for taking the time to speak with me today. It was great learning more about Mayra’s Boutique and your focus on expanding your customer reach beyond in-store walk-ins.
+
+As discussed, our next step is a short 15-minute discovery meeting on Thursday at 3:00 PM PST. We’ll review practical options for getting your collection online and driving local orders.
+
+Calendar invite details are attached. I look forward to speaking with you then!
+
+Best regards,
+Harsh
+Zylo Digital | We build brands that sell.
+    </div>
+  </div>
+
+  <!-- PART 8 -->
+  <div class="section-header">PART 8 — PRE-CALL CHECKLIST & PRINCIPLE</div>
+  <ul class="checklist">
+    <li>Verify phone number (+1 562-388-0931) and ensure local Pacific Time (PST) is during business hours (10:00 AM – 5:00 PM PT).</li>
+    <li>Keep the goal strictly on booking a 15-minute discovery call, NOT closing on the spot.</li>
+    <li>First-month pricing reference: $600 Digital Growth / $800 Premium Growth (50% advance before start).</li>
+  </ul>
+
+  <div class="tip-box" style="background: #f1f5f9; border-color: #cbd5e1; border-left-color: #0f172a; color: #0f172a; font-size: 12pt;">
+    <strong>YOUR GUIDING PRINCIPLE:</strong><br>
+    <em>"Listen first. Recommend second. Close only when the prospect understands the proposed scope and wants to proceed. You are discovering whether Zylo Digital can genuinely solve a problem that matters to Mayra's Boutique."</em>
+  </div>
+
+  <div class="footer-note">
+    ZYLO DIGITAL • CONFIDENTIAL SALES PLAYBOOK • PREPARED FOR HARSH
+  </div>
+
+</body>
+</html>

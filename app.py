@@ -12,7 +12,7 @@ from typing import Optional, List, Dict
 
 import pandas as pd
 from fastapi import FastAPI, UploadFile, File, Form, BackgroundTasks
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from pydantic import BaseModel
 
 app = FastAPI(title="Zylo Reach - Cold Email Automation Engine")
@@ -320,3 +320,25 @@ def index_page():
         with open(index_file, "r", encoding="utf-8") as f:
             return f.read()
     return "<h1>Zylo Reach Backend Running</h1>"
+
+
+@app.get("/download-pdf")
+def download_pdf():
+    pdf_file = os.path.join(BASE_DIR, "Mayras_Boutique_Sales_Script_Zylo_Digital.pdf")
+    if os.path.exists(pdf_file):
+        return FileResponse(
+            path=pdf_file,
+            filename="Mayras_Boutique_Sales_Script_Zylo_Digital.pdf",
+            media_type="application/pdf"
+        )
+    return JSONResponse(status_code=404, content={"error": "PDF not found"})
+
+
+@app.get("/view-script", response_class=HTMLResponse)
+def view_script():
+    html_file = os.path.join(BASE_DIR, "mayras_boutique_script.html")
+    if os.path.exists(html_file):
+        with open(html_file, "r", encoding="utf-8") as f:
+            return f.read()
+    return "<h1>Script not found</h1>"
+
